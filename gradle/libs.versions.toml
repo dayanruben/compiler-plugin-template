@@ -2,9 +2,6 @@
 # https://github.com/JetBrains/kotlin
 kotlin = "2.4.0"
 
-# https://github.com/Kotlin/binary-compatibility-validator
-kotlin-binaryCompatibilityValidator = "0.16.3"
-
 # https://github.com/junit-team/junit4
 junit = "4.13.2"
 
@@ -32,7 +29,6 @@ junit = { module = "junit:junit", version.ref = "junit" }
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlin-binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlin-binaryCompatibilityValidator"}
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig"}
 node-gradle = { id = "com.github.node-gradle.node", version.ref = "node-gradle" }
 
