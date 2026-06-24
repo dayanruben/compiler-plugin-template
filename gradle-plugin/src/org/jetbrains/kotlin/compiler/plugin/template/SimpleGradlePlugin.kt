@@ -34,6 +34,11 @@ class SimpleGradlePlugin : KotlinCompilerPluginSupportPlugin {
             implementation(ANNOTATIONS_LIBRARY_COORDINATES)
         }
 
+        kotlinCompilation.compileTaskProvider.configure {
+            // Run this compiler plugin before Compose plugin.
+            it.compilerOptions.freeCompilerArgs.add("-Xcompiler-plugin-order=${BuildConfig.KOTLIN_PLUGIN_ID}>androidx.compose.compiler.plugins.kotlin")
+        }
+
         return project.provider {
             val extension = project.extensions.getByType(SimpleGradleExtension::class.java)
 
