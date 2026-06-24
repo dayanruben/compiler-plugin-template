@@ -29,9 +29,9 @@ class SimpleGradlePlugin : KotlinCompilerPluginSupportPlugin {
     ): Provider<List<SubpluginOption>> {
         val project = kotlinCompilation.target.project
 
-        kotlinCompilation.dependencies { implementation(ANNOTATIONS_LIBRARY_COORDINATES) }
-        if (kotlinCompilation.implementationConfigurationName == "metadataCompilationImplementation") {
-            project.dependencies.add("commonMainImplementation", ANNOTATIONS_LIBRARY_COORDINATES)
+        kotlinCompilation.defaultSourceSet.dependencies {
+            // Add annotations library to all compilations.
+            implementation(ANNOTATIONS_LIBRARY_COORDINATES)
         }
 
         return project.provider {
