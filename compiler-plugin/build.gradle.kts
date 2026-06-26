@@ -38,15 +38,15 @@ idea {
     module.generatedSourceDirs.add(testGenDirectory.get().asFile)
 }
 
-val testArtifacts: Configuration by configurations.creating
+val testArtifacts: Configuration = configurations.create("testArtifact")
 
-val annotationsRuntimeClasspath by configurations.dependencyScope("annotationsRuntimeClasspath") {
+val annotationsRuntimeClasspath = configurations.dependencyScope("annotationsRuntimeClasspath") {
     isTransitive = false
 }
-val annotationsJvmRuntimeClasspath by configurations.resolvable("annotationsJvmRuntimeClasspath") {
+val annotationsJvmRuntimeClasspath = configurations.resolvable("annotationsJvmRuntimeClasspath") {
     extendsFrom(annotationsRuntimeClasspath)
 }
-val annotationsJsRuntimeClasspath by configurations.resolvable("annotationsJsRuntimeClasspath") {
+val annotationsJsRuntimeClasspath = configurations.resolvable("annotationsJsRuntimeClasspath") {
     extendsFrom(annotationsRuntimeClasspath)
     attributes {
         attribute(Usage.USAGE_ATTRIBUTE, objects.named(KotlinUsages.KOTLIN_RUNTIME))
@@ -93,8 +93,8 @@ tasks.test {
     useJUnitPlatform()
     workingDir = rootDir
 
-    systemProperty("annotationsRuntime.jvm.classpath", annotationsJvmRuntimeClasspath.asPath)
-    systemProperty("annotationsRuntime.js.classpath", annotationsJsRuntimeClasspath.asPath)
+    systemProperty("annotationsRuntime.jvm.classpath", annotationsJvmRuntimeClasspath.get().asPath)
+    systemProperty("annotationsRuntime.js.classpath", annotationsJsRuntimeClasspath.get().asPath)
 
     // Properties required to run the internal test framework.
     setLibraryProperty("org.jetbrains.kotlin.test.kotlin-stdlib", "kotlin-stdlib")
@@ -126,7 +126,7 @@ kotlin {
     }
 }
 
-val generateTests by tasks.registering(JavaExec::class) {
+val generateTests = tasks.register<JavaExec>("generateTests") {
     inputs.dir(testDataDir)
         .withPropertyName("testData")
         .withPathSensitivity(PathSensitivity.RELATIVE)
